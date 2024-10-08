@@ -7,11 +7,11 @@ use std::ops::*;
 pub struct Quantity<T, LE, ME, TE, IE, OE>
 where
     T: Copy,
-    LE: Exponent, // m
-    ME: Exponent, // kg
-    TE: Exponent, // s
-    IE: Exponent, // A
-    OE: Exponent, // K
+    LE: Exponent, // Length (m)
+    ME: Exponent, // Mass (kg)
+    TE: Exponent, // Time (s)
+    IE: Exponent, // Electric current (A)
+    OE: Exponent, // Thermodynamic temperature (K)
 {
     value: T,
     le: PhantomData<LE>,

@@ -6,8 +6,8 @@ pub use quantity::*;
 
 pub mod derived;
 pub use derived::*;
-pub mod derived_units;
-pub use derived_units::*;
+pub mod alias;
+pub use alias::*;
 
 pub mod imp;
 pub use imp::*;

@@ -1,7 +1,7 @@
 use super::*;
 use std::fmt::Display;
 
-pub trait Derived {
+pub trait Symbol {
     fn symbol() -> &'static str;
 }
 
@@ -13,7 +13,7 @@ where
     TE: Exponent,
     IE: Exponent,
     OE: Exponent,
-    Self: Derived,
+    Self: Symbol,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.value().fmt(f)?;

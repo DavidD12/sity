@@ -1,2 +1,2 @@
-pub mod units;
-pub use units::*;
+pub mod quantity;
+pub use quantity::*;
