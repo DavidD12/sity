@@ -3,7 +3,7 @@ use std::fmt::{Debug, Display};
 use std::marker::PhantomData;
 use std::ops::*;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Quantity<T, LE, ME, TE, IE, OE>
 where
     T: Copy,
@@ -45,46 +45,61 @@ where
         self.value
     }
 
+    pub fn pretty_unit<E: Exponent>(unit: &str) -> String {
+        let exp = match E::VALUE {
+            1 => "".to_string(),
+            2 => "²".to_string(),
+            3 => "³".to_string(),
+            x => x.to_string(),
+        };
+        format!("{}{}{}", E::BASE_SYMBOL, unit, exp)
+    }
+
     pub fn unit(&self) -> String {
         let mut sep = false;
         let mut s = String::new();
-        if LE::value() != 0 {
-            s += &format!("m{}", LE::pretty());
+        // Length (m)
+        if LE::VALUE != 0 {
+            s += &Self::pretty_unit::<LE>("m");
             sep = true;
         }
-        if ME::value() != 0 {
+        // Mass (Kg)
+        if ME::VALUE != 0 {
             if sep {
                 s += ".";
             }
-            s += &format!("kg{}", ME::pretty());
+            s += &Self::pretty_unit::<ME>("g");
             sep = true;
         }
-        if TE::value() != 0 {
+        // Time (s)
+        if TE::VALUE != 0 {
             if sep {
                 s += ".";
             }
-            s += &format!("s{}", TE::pretty());
+            s += &Self::pretty_unit::<TE>("s");
             sep = true;
         }
-        if IE::value() != 0 {
+        // Electric (A)
+        if IE::VALUE != 0 {
             if sep {
                 s += ".";
             }
-            s += &format!("A{}", IE::pretty());
+            s += &Self::pretty_unit::<IE>("s");
             sep = true;
         }
-        if OE::value() != 0 {
+        // Temperature (K)
+        if OE::VALUE != 0 {
             if sep {
                 s += ".";
             }
-            s += &format!("K{}", OE::pretty());
+            s += &Self::pretty_unit::<OE>("K");
             // sep = true;
         }
         s
     }
 }
 
-impl<T, LE, ME, TE, IE, OE> Debug for Quantity<T, LE, ME, TE, IE, OE>
+impl<T, LE, ME, TE, IE, OE> Display for Quantity<T, LE, ME, TE, IE, OE>
 where
     T: Copy + Display,
     LE: Exponent,
@@ -94,7 +109,7 @@ where
     OE: Exponent,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.value().fmt(f)?;
+        self.value.fmt(f)?;
         write!(f, "{}", self.unit())
     }
 }
@@ -297,11 +312,11 @@ where
 impl<T, LE, ME, TE, IE, OE> Quantity<T, LE, ME, TE, IE, OE>
 where
     T: Copy,
-    LE: Exponent + NegExp,
-    ME: Exponent + NegExp,
-    TE: Exponent + NegExp,
-    IE: Exponent + NegExp,
-    OE: Exponent + NegExp,
+    LE: Exponent + InvExp,
+    ME: Exponent + InvExp,
+    TE: Exponent + InvExp,
+    IE: Exponent + InvExp,
+    OE: Exponent + InvExp,
 {
     pub fn inverse(
         &self,
@@ -316,11 +331,11 @@ where
 impl<T, LE, ME, TE, IE, OE> PartialEq for Quantity<T, LE, ME, TE, IE, OE>
 where
     T: Copy + PartialEq,
-    LE: Exponent + NegExp,
-    ME: Exponent + NegExp,
-    TE: Exponent + NegExp,
-    IE: Exponent + NegExp,
-    OE: Exponent + NegExp,
+    LE: Exponent + InvExp,
+    ME: Exponent + InvExp,
+    TE: Exponent + InvExp,
+    IE: Exponent + InvExp,
+    OE: Exponent + InvExp,
 {
     fn eq(&self, other: &Self) -> bool {
         self.value == other.value
@@ -332,13 +347,13 @@ where
 impl<T, LE, ME, TE, IE, OE> PartialOrd for Quantity<T, LE, ME, TE, IE, OE>
 where
     T: Copy + PartialOrd,
-    LE: Exponent + NegExp,
-    ME: Exponent + NegExp,
-    TE: Exponent + NegExp,
-    IE: Exponent + NegExp,
-    OE: Exponent + NegExp,
+    LE: Exponent + InvExp,
+    ME: Exponent + InvExp,
+    TE: Exponent + InvExp,
+    IE: Exponent + InvExp,
+    OE: Exponent + InvExp,
 {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.value.partial_cmp(&other.value())
+        self.value.partial_cmp(&other.value)
     }
 }

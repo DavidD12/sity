@@ -1,8 +1,8 @@
 pub use sity::*;
 
 fn main() {
-    let x = Metre::new(1.0);
-    let y = x * 3.0;
-    let z: Metre2<_> = x.pow2() + 3.0 * x.pow2();
-    println!("x = {}", z.sqrt());
+    let m = SI::_m::<_, Centi>(1.0);
+    let s = Second::new(2.0);
+    let x = m * m / s;
+    println!("x = {}", x);
 }

@@ -1,7 +1,13 @@
 [package]
 name = "sity"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
+authors = ["David Doose <David.Doose@gmail.com>"]
+license = "LGPL-3.0-only"
+description = "International System of Units (SI) Typing"
+repository = "https://github.com/DavidD12/sity"
+readme = "README.md"
+keywords = ["SI", "Typing"]
 
 [dependencies]
 sealed = "0.3.0"
