@@ -1,6 +1,40 @@
 use crate::*;
 use std::ops::*;
 
+//------------------------- Pow/Root -------------------------
+
+impl Pow2 for f32 {
+    type Output = Self;
+
+    fn pow2(self) -> Self::Output {
+        self.powi(2)
+    }
+}
+
+impl Pow3 for f32 {
+    type Output = Self;
+
+    fn pow3(self) -> Self::Output {
+        self.powi(2)
+    }
+}
+
+impl Root2 for f32 {
+    type Output = Self;
+
+    fn root2(self) -> Self::Output {
+        self.sqrt()
+    }
+}
+
+impl Root3 for f32 {
+    type Output = Self;
+
+    fn root3(self) -> Self::Output {
+        self.cbrt()
+    }
+}
+
 //------------------------- Mul -------------------------
 
 impl<LE, ME, TE, IE, OE> Mul<Quantity<f32, LE, ME, TE, IE, OE>> for f32
@@ -121,7 +155,7 @@ where
     OE: Exponent + Root2Exp,
 {
     type Output = Quantity<f32, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
-    fn sqrt(self) -> Self::Output {
+    fn root2(self) -> Self::Output {
         Self::Output::new(self.value().sqrt())
     }
 }
@@ -137,7 +171,7 @@ where
     OE: Exponent + Root3Exp,
 {
     type Output = Quantity<f32, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
-    fn cbrt(self) -> Self::Output {
+    fn root3(self) -> Self::Output {
         Self::Output::new(self.value().cbrt())
     }
 }

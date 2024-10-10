@@ -36,10 +36,10 @@ pub trait Pow3 {
 
 pub trait Root2 {
     type Output;
-    fn sqrt(self) -> Self::Output;
+    fn root2(self) -> Self::Output;
 }
 
 pub trait Root3 {
     type Output;
-    fn cbrt(self) -> Self::Output;
+    fn root3(self) -> Self::Output;
 }
