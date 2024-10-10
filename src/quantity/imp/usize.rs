@@ -1,6 +1,24 @@
 use crate::*;
 use std::ops::*;
 
+//------------------------- Pow -------------------------
+
+impl Pow2 for usize {
+    type Output = Self;
+
+    fn pow2(self) -> Self::Output {
+        self.pow(2)
+    }
+}
+
+impl Pow3 for usize {
+    type Output = Self;
+
+    fn pow3(self) -> Self::Output {
+        self.pow(3)
+    }
+}
+
 //------------------------- Mul -------------------------
 
 impl<LE, ME, TE, IE, OE> Mul<Quantity<usize, LE, ME, TE, IE, OE>> for usize
