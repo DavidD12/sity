@@ -99,6 +99,8 @@ where
     }
 }
 
+//------------------------- Display -------------------------
+
 impl<T, LE, ME, TE, IE, OE> Display for Quantity<T, LE, ME, TE, IE, OE>
 where
     T: Copy + Display,
@@ -114,6 +116,8 @@ where
     }
 }
 
+//------------------------- From/Into -------------------------
+
 impl<T, LE, ME, TE, IE, OE> From<T> for Quantity<T, LE, ME, TE, IE, OE>
 where
     T: Copy + Display,
@@ -125,6 +129,154 @@ where
 {
     fn from(value: T) -> Self {
         Self::new(value.into())
+    }
+}
+
+//------------------------- Number -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Number for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Number,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    const ZERO: Self = Self {
+        value: T::ZERO,
+        le: PhantomData,
+        me: PhantomData,
+        te: PhantomData,
+        ie: PhantomData,
+        oe: PhantomData,
+    };
+
+    const ONE: Self = Self {
+        value: T::ONE,
+        le: PhantomData,
+        me: PhantomData,
+        te: PhantomData,
+        ie: PhantomData,
+        oe: PhantomData,
+    };
+}
+
+//------------------------- Signed -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Signed for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Signed,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    fn abs(self) -> Self {
+        Self::new(self.value.abs())
+    }
+}
+
+//------------------------- Integer -------------------------
+
+impl<T, LE, ME, TE, IE, OE> PartialEq for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + PartialEq,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    fn eq(&self, other: &Self) -> bool {
+        self.value == other.value
+    }
+}
+
+impl<T, LE, ME, TE, IE, OE> Eq for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Eq,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+}
+
+impl<T, LE, ME, TE, IE, OE> PartialOrd for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + PartialOrd,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        self.value.partial_cmp(&other.value)
+    }
+}
+
+impl<T, LE, ME, TE, IE, OE> Ord for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Ord,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.value.cmp(&other.value)
+    }
+}
+
+impl<T, LE, ME, TE, IE, OE> Integer for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Integer,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+}
+
+//------------------------- Float -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Float for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Float,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    fn min(self, other: Self) -> Self {
+        Self::new(self.value.min(other.value))
+    }
+
+    fn max(self, other: Self) -> Self {
+        Self::new(self.value.max(other.value))
+    }
+
+    fn floor(self) -> Self {
+        Self::new(self.value.floor())
+    }
+
+    fn round(self) -> Self {
+        Self::new(self.value.round())
+    }
+
+    fn ceil(self) -> Self {
+        Self::new(self.value.ceil())
+    }
+
+    fn trunc(self) -> Self {
+        Self::new(self.value.trunc())
     }
 }
 
@@ -391,37 +543,5 @@ where
     type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
     fn root3(self) -> Self::Output {
         Self::Output::new(self.value().root3())
-    }
-}
-
-//------------------------- PartialEq -------------------------
-
-impl<T, LE, ME, TE, IE, OE> PartialEq for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Copy + PartialEq,
-    LE: Exponent + InvExp,
-    ME: Exponent + InvExp,
-    TE: Exponent + InvExp,
-    IE: Exponent + InvExp,
-    OE: Exponent + InvExp,
-{
-    fn eq(&self, other: &Self) -> bool {
-        self.value == other.value
-    }
-}
-
-//------------------------- PartialOrd -------------------------
-
-impl<T, LE, ME, TE, IE, OE> PartialOrd for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Copy + PartialOrd,
-    LE: Exponent + InvExp,
-    ME: Exponent + InvExp,
-    TE: Exponent + InvExp,
-    IE: Exponent + InvExp,
-    OE: Exponent + InvExp,
-{
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.value.partial_cmp(&other.value)
     }
 }

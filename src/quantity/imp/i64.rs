@@ -1,6 +1,21 @@
 use crate::*;
 use std::ops::*;
 
+//------------------------- Number -------------------------
+
+impl Number for i64 {
+    const ZERO: Self = 0;
+    const ONE: Self = 1;
+}
+
+//------------------------- Signed -------------------------
+
+impl Signed for i64 {
+    fn abs(self) -> Self {
+        self.abs()
+    }
+}
+
 //------------------------- Pow -------------------------
 
 impl Pow2 for i64 {
@@ -32,39 +47,5 @@ where
     type Output = Quantity<i64, LE, ME, TE, IE, OE>;
     fn mul(self, other: Quantity<i64, LE, ME, TE, IE, OE>) -> Self::Output {
         Self::Output::new(self * other.value())
-    }
-}
-
-//------------------------- Integer -------------------------
-
-impl<LE, ME, TE, IE, OE> Integer for Quantity<i64, LE, ME, TE, IE, OE>
-where
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-    fn min(self, other: Self) -> Self {
-        Self::new(self.value().min(other.value()))
-    }
-
-    fn max(self, other: Self) -> Self {
-        Self::new(self.value().max(other.value()))
-    }
-}
-
-//------------------------- Signed -------------------------
-
-impl<LE, ME, TE, IE, OE> Signed for Quantity<i64, LE, ME, TE, IE, OE>
-where
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-    fn abs(self) -> Self {
-        Self::new(self.value().abs())
     }
 }

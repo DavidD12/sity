@@ -1,6 +1,49 @@
 use crate::*;
 use std::ops::*;
 
+//------------------------- Number -------------------------
+
+impl Number for f32 {
+    const ZERO: Self = 0.0;
+    const ONE: Self = 1.0;
+}
+
+//------------------------- Signed -------------------------
+
+impl Signed for f32 {
+    fn abs(self) -> Self {
+        self.abs()
+    }
+}
+
+//------------------------- Float -------------------------
+
+impl Float for f32 {
+    fn min(self, other: Self) -> Self {
+        self.min(other)
+    }
+
+    fn max(self, other: Self) -> Self {
+        self.max(other)
+    }
+
+    fn floor(self) -> Self {
+        self.floor()
+    }
+
+    fn round(self) -> Self {
+        self.round()
+    }
+
+    fn ceil(self) -> Self {
+        self.ceil()
+    }
+
+    fn trunc(self) -> Self {
+        self.trunc()
+    }
+}
+
 //------------------------- Pow/Root -------------------------
 
 impl Pow2 for f32 {
@@ -48,66 +91,5 @@ where
     type Output = Quantity<f32, LE, ME, TE, IE, OE>;
     fn mul(self, other: Quantity<f32, LE, ME, TE, IE, OE>) -> Self::Output {
         Self::Output::new(self * other.value())
-    }
-}
-
-//------------------------- Integer -------------------------
-
-impl<LE, ME, TE, IE, OE> Integer for Quantity<f32, LE, ME, TE, IE, OE>
-where
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-    fn min(self, other: Self) -> Self {
-        Self::new(self.value().min(other.value()))
-    }
-
-    fn max(self, other: Self) -> Self {
-        Self::new(self.value().max(other.value()))
-    }
-}
-
-//------------------------- Signed -------------------------
-
-impl<LE, ME, TE, IE, OE> Signed for Quantity<f32, LE, ME, TE, IE, OE>
-where
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-    fn abs(self) -> Self {
-        Self::new(self.value().abs())
-    }
-}
-
-//------------------------- Float -------------------------
-
-impl<LE, ME, TE, IE, OE> Float for Quantity<f32, LE, ME, TE, IE, OE>
-where
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-    fn floor(self) -> Self {
-        Self::new(self.value().floor())
-    }
-
-    fn round(self) -> Self {
-        Self::new(self.value().round())
-    }
-
-    fn ceil(self) -> Self {
-        Self::new(self.value().ceil())
-    }
-
-    fn trunc(self) -> Self {
-        Self::new(self.value().trunc())
     }
 }

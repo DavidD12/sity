@@ -14,6 +14,4 @@ fn main() {
     let pure_value = si_value.value();
     let pure_value_size = mem::size_of_val(&pure_value);
     println!("pure_value = {} (size = {})", pure_value, pure_value_size);
-
-    let x = a.pow2();
 }
