@@ -62,6 +62,7 @@ pub type Value<T> = Quantity<T, Exp0, Exp0, Exp0, Exp0, Exp0>;
 //------------------------- Meter -------------------------
 
 pub type Metre_<T, P> = Quantity<T, Exp1<P>, Exp0, Exp0, Exp0, Exp0>;
+pub type Metre2_<T, P> = Quantity<T, Exp2<P>, Exp0, Exp0, Exp0, Exp0>;
 
 pub type Metre<T> = Metre_<T, One>;
 
