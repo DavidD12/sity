@@ -326,6 +326,74 @@ where
     }
 }
 
+//------------------------- Pow2 -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Pow2 for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Pow2<Output = T>,
+    LE: Exponent + Pow2Exp,
+    ME: Exponent + Pow2Exp,
+    TE: Exponent + Pow2Exp,
+    IE: Exponent + Pow2Exp,
+    OE: Exponent + Pow2Exp,
+{
+    type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
+    fn pow2(self) -> Self::Output {
+        Self::Output::new(self.value().pow2())
+    }
+}
+
+//------------------------- Pow3 -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Pow3 for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Pow3<Output = T>,
+    LE: Exponent + Pow3Exp,
+    ME: Exponent + Pow3Exp,
+    TE: Exponent + Pow3Exp,
+    IE: Exponent + Pow3Exp,
+    OE: Exponent + Pow3Exp,
+{
+    type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
+    fn pow3(self) -> Self::Output {
+        Self::Output::new(self.value().pow3())
+    }
+}
+
+//------------------------- Root2 -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Root2 for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Root2<Output = T>,
+    LE: Exponent + Root2Exp,
+    ME: Exponent + Root2Exp,
+    TE: Exponent + Root2Exp,
+    IE: Exponent + Root2Exp,
+    OE: Exponent + Root2Exp,
+{
+    type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
+    fn root2(self) -> Self::Output {
+        Self::Output::new(self.value().root2())
+    }
+}
+
+//------------------------- Pow3 -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Root3 for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Root3<Output = T>,
+    LE: Exponent + Root3Exp,
+    ME: Exponent + Root3Exp,
+    TE: Exponent + Root3Exp,
+    IE: Exponent + Root3Exp,
+    OE: Exponent + Root3Exp,
+{
+    type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
+    fn root3(self) -> Self::Output {
+        Self::Output::new(self.value().root3())
+    }
+}
+
 //------------------------- PartialEq -------------------------
 
 impl<T, LE, ME, TE, IE, OE> PartialEq for Quantity<T, LE, ME, TE, IE, OE>

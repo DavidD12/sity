@@ -68,35 +68,3 @@ where
         Self::new(self.value().abs())
     }
 }
-
-//------------------------- Pow2 -------------------------
-
-impl<LE, ME, TE, IE, OE> Pow2 for Quantity<i8, LE, ME, TE, IE, OE>
-where
-    LE: Exponent + Pow2Exp,
-    ME: Exponent + Pow2Exp,
-    TE: Exponent + Pow2Exp,
-    IE: Exponent + Pow2Exp,
-    OE: Exponent + Pow2Exp,
-{
-    type Output = Quantity<i8, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
-    fn pow2(self) -> Self::Output {
-        Self::Output::new(self.value().pow(2))
-    }
-}
-
-//------------------------- Pow3 -------------------------
-
-impl<LE, ME, TE, IE, OE> Pow3 for Quantity<i8, LE, ME, TE, IE, OE>
-where
-    LE: Exponent + Pow3Exp,
-    ME: Exponent + Pow3Exp,
-    TE: Exponent + Pow3Exp,
-    IE: Exponent + Pow3Exp,
-    OE: Exponent + Pow3Exp,
-{
-    type Output = Quantity<i8, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
-    fn pow3(self) -> Self::Output {
-        Self::Output::new(self.value().pow(3))
-    }
-}
