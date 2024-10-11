@@ -3,10 +3,14 @@ use std::fmt::{Debug, Display};
 use std::marker::PhantomData;
 use std::ops::*;
 
+pub trait QuantityValue<T: Number>: Number {
+    fn value(self) -> T;
+}
+
 #[derive(Copy, Clone, Debug)]
 pub struct Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy,
+    T: Number,
     LE: Exponent, // Length (m)
     ME: Exponent, // Mass (kg)
     TE: Exponent, // Time (s)
@@ -23,7 +27,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy,
+    T: Number,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -39,10 +43,6 @@ where
             ie: PhantomData,
             oe: PhantomData,
         }
-    }
-
-    pub fn value(&self) -> T {
-        self.value
     }
 
     pub fn pretty_unit<E: Exponent>(unit: &str) -> String {
@@ -99,11 +99,27 @@ where
     }
 }
 
+// //------------------------- Value -------------------------
+
+// impl<T, LE, ME, TE, IE, OE> QuantityValue<T> for Quantity<T, LE, ME, TE, IE, OE>
+// where
+//     T: Number,
+//     LE: Exponent,
+//     ME: Exponent,
+//     TE: Exponent,
+//     IE: Exponent,
+//     OE: Exponent,
+// {
+//     fn value(self) -> T {
+//         self.value
+//     }
+// }
+
 //------------------------- Display -------------------------
 
 impl<T, LE, ME, TE, IE, OE> Display for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Display,
+    T: Number + Display,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -120,7 +136,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> From<T> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Display,
+    T: Number + Display,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -129,6 +145,24 @@ where
 {
     fn from(value: T) -> Self {
         Self::new(value.into())
+    }
+}
+
+//------------------------- HasValue -------------------------
+
+impl<T, LE, ME, TE, IE, OE> HasValue for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Copy + Number,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    type Output = T;
+
+    fn value(self) -> Self::Output {
+        self.value
     }
 }
 
@@ -182,7 +216,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> PartialEq for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + PartialEq,
+    T: Number + PartialEq,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -196,7 +230,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Eq for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Eq,
+    T: Number + Eq,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -207,7 +241,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> PartialOrd for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + PartialOrd,
+    T: Number + PartialOrd,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -221,7 +255,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Ord for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Ord,
+    T: Number + Ord,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -235,7 +269,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Integer for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Integer,
+    T: Integer,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -248,7 +282,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Float for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Float,
+    T: Float,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -284,7 +318,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Add<Self> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Add<T, Output = T>,
+    T: Number + Add<T, Output = T>,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -300,7 +334,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> AddAssign<Self> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + AddAssign<T>,
+    T: Number + AddAssign<T>,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -316,7 +350,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Sub<Self> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Sub<T, Output = T>,
+    T: Number + Sub<T, Output = T>,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -332,7 +366,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> SubAssign<Self> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + SubAssign<T>,
+    T: Number + SubAssign<T>,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -348,7 +382,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Mul<T> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Mul<T, Output = T>,
+    T: Number + Mul<T, Output = T>,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -364,7 +398,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> MulAssign<T> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + MulAssign<T>,
+    T: Number + MulAssign<T>,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -379,7 +413,7 @@ where
 impl<T, LE, ME, TE, IE, OE, LE1, ME1, TE1, IE1, OE1> Mul<Quantity<T, LE1, ME1, TE1, IE1, OE1>>
     for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Mul<T, Output = T>,
+    T: Number + Mul<T, Output = T>,
     LE: Exponent + MulExp<LE1>,
     ME: Exponent + MulExp<ME1>,
     TE: Exponent + MulExp<TE1>,
@@ -402,7 +436,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Div<T> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Div<T, Output = T>,
+    T: Number + Div<T, Output = T>,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -418,7 +452,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> DivAssign<T> for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + DivAssign<T>,
+    T: Number + DivAssign<T>,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -433,7 +467,7 @@ where
 impl<T, LE, ME, TE, IE, OE, LE1, ME1, TE1, IE1, OE1> Div<Quantity<T, LE1, ME1, TE1, IE1, OE1>>
     for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Div<T, Output = T>,
+    T: Number + Div<T, Output = T>,
     LE: Exponent + DivExp<LE1>,
     ME: Exponent + DivExp<ME1>,
     TE: Exponent + DivExp<TE1>,
@@ -463,7 +497,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy,
+    T: Number,
     LE: Exponent + InvExp,
     ME: Exponent + InvExp,
     TE: Exponent + InvExp,
@@ -482,7 +516,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Pow2 for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Pow2<Output = T>,
+    T: Pow2<Output = T>,
     LE: Exponent + Pow2Exp,
     ME: Exponent + Pow2Exp,
     TE: Exponent + Pow2Exp,
@@ -499,7 +533,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Pow3 for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Pow3<Output = T>,
+    T: Pow3<Output = T>,
     LE: Exponent + Pow3Exp,
     ME: Exponent + Pow3Exp,
     TE: Exponent + Pow3Exp,
@@ -516,7 +550,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Root2 for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Root2<Output = T>,
+    T: Root2<Output = T>,
     LE: Exponent + Root2Exp,
     ME: Exponent + Root2Exp,
     TE: Exponent + Root2Exp,
@@ -533,7 +567,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Root3 for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Root3<Output = T>,
+    T: Root3<Output = T>,
     LE: Exponent + Root3Exp,
     ME: Exponent + Root3Exp,
     TE: Exponent + Root3Exp,

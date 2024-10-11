@@ -5,52 +5,52 @@ pub struct SI;
 impl SI {
     //------------------------- Value -------------------------
 
-    pub fn value<T: Copy>(value: T) -> Value<T> {
+    pub fn value<T: Number>(value: T) -> Value<T> {
         Value::new(value)
     }
 
     //------------------------- Meter -------------------------
 
-    pub fn _m<T: Copy, P: Prefix>(value: T) -> Metre_<T, P> {
+    pub fn _m<T: Number, P: Prefix>(value: T) -> Metre_<T, P> {
         Metre_::new(value)
     }
-    pub fn m<T: Copy>(value: T) -> Metre<T> {
+    pub fn m<T: Number>(value: T) -> Metre<T> {
         Metre_::new(value)
     }
-    pub fn km<T: Copy>(value: T) -> KiloMetre<T> {
+    pub fn km<T: Number>(value: T) -> KiloMetre<T> {
         Metre_::new(value)
     }
-    pub fn dm<T: Copy>(value: T) -> DeciMetre<T> {
+    pub fn dm<T: Number>(value: T) -> DeciMetre<T> {
         Metre_::new(value)
     }
-    pub fn cm<T: Copy>(value: T) -> CentiMetre<T> {
+    pub fn cm<T: Number>(value: T) -> CentiMetre<T> {
         Metre_::new(value)
     }
-    pub fn mm<T: Copy>(value: T) -> MilliMetre<T> {
+    pub fn mm<T: Number>(value: T) -> MilliMetre<T> {
         Metre_::new(value)
     }
 
     //------------------------- Gram -------------------------
 
-    pub fn _g<T: Copy, P: Prefix>(value: T) -> Gram_<T, P> {
+    pub fn _g<T: Number, P: Prefix>(value: T) -> Gram_<T, P> {
         Gram_::new(value)
     }
-    pub fn kg<T: Copy>(value: T) -> KiloGram<T> {
+    pub fn kg<T: Number>(value: T) -> KiloGram<T> {
         Gram_::new(value)
     }
-    pub fn g<T: Copy>(value: T) -> Gram<T> {
+    pub fn g<T: Number>(value: T) -> Gram<T> {
         Gram_::new(value)
     }
 
     //------------------------- Second -------------------------
 
-    pub fn _s<T: Copy, P: Prefix>(value: T) -> Second_<T, P> {
+    pub fn _s<T: Number, P: Prefix>(value: T) -> Second_<T, P> {
         Second_::new(value)
     }
-    pub fn s<T: Copy>(value: T) -> Second<T> {
+    pub fn s<T: Number>(value: T) -> Second<T> {
         Second::new(value)
     }
-    pub fn ms<T: Copy>(value: T) -> MilliSecond<T> {
+    pub fn ms<T: Number>(value: T) -> MilliSecond<T> {
         MilliSecond::new(value)
     }
 }

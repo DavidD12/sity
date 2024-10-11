@@ -1,6 +1,15 @@
+use std::ops::*;
+
+//------------------------- HasValue -------------------------
+
+pub trait HasValue {
+    type Output: Number;
+    fn value(self) -> Self::Output;
+}
+
 //------------------------- Number -------------------------
 
-pub trait Number {
+pub trait Number: Copy {
     const ZERO: Self;
     const ONE: Self;
 }
@@ -13,7 +22,7 @@ pub trait Signed: Number {
 
 //------------------------- Integer -------------------------
 
-pub trait Integer: Ord {}
+pub trait Integer: Number + Ord {}
 
 //------------------------- Float -------------------------
 
@@ -30,22 +39,22 @@ pub trait Float: Number + Signed {
 
 pub trait Pow2: Number {
     type Output;
-    fn pow2(self) -> Self::Output;
+    fn pow2(self) -> <Self as Pow2>::Output;
 }
 
 pub trait Pow3: Number {
     type Output;
-    fn pow3(self) -> Self::Output;
+    fn pow3(self) -> <Self as Pow3>::Output;
 }
 
 //------------------------- Root -------------------------
 
 pub trait Root2: Number {
     type Output;
-    fn root2(self) -> Self::Output;
+    fn root2(self) -> <Self as Root2>::Output;
 }
 
 pub trait Root3: Number {
     type Output;
-    fn root3(self) -> Self::Output;
+    fn root3(self) -> <Self as Root3>::Output;
 }

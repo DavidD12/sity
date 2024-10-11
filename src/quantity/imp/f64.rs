@@ -1,6 +1,16 @@
 use crate::*;
 use std::ops::*;
 
+//------------------------- HasValue -------------------------
+
+impl HasValue for f64 {
+    type Output = Self;
+
+    fn value(self) -> Self::Output {
+        self
+    }
+}
+
 //------------------------- Number -------------------------
 
 impl Number for f64 {
