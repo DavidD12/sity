@@ -6,11 +6,6 @@ use std::ops::*;
 impl Number for i16 {
     const ZERO: Self = 0;
     const ONE: Self = 1;
-}
-
-//------------------------- Signed -------------------------
-
-impl Signed for i16 {
     fn abs(self) -> Self {
         self.abs()
     }

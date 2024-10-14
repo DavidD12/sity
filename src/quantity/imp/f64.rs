@@ -16,19 +16,12 @@ impl HasValue for f64 {
 impl Number for f64 {
     const ZERO: Self = 0.0;
     const ONE: Self = 1.0;
-}
+    const EPSILON: Self = std::f64::EPSILON;
 
-//------------------------- Signed -------------------------
-
-impl Signed for f64 {
     fn abs(self) -> Self {
         self.abs()
     }
-}
 
-//------------------------- Float -------------------------
-
-impl Float for f64 {
     fn min(self, other: Self) -> Self {
         self.min(other)
     }
@@ -58,7 +51,7 @@ impl Float for f64 {
 impl Pow2 for f64 {
     type Output = Self;
 
-    fn pow2(self) -> Self::Output {
+    fn pow2(self) -> <Self as Pow2>::Output {
         self.powi(2)
     }
 }
@@ -66,7 +59,7 @@ impl Pow2 for f64 {
 impl Pow3 for f64 {
     type Output = Self;
 
-    fn pow3(self) -> Self::Output {
+    fn pow3(self) -> <Self as Pow3>::Output {
         self.powi(2)
     }
 }
@@ -74,7 +67,7 @@ impl Pow3 for f64 {
 impl Root2 for f64 {
     type Output = Self;
 
-    fn root2(self) -> Self::Output {
+    fn root2(self) -> <Self as Root2>::Output {
         self.sqrt()
     }
 }
@@ -82,7 +75,7 @@ impl Root2 for f64 {
 impl Root3 for f64 {
     type Output = Self;
 
-    fn root3(self) -> Self::Output {
+    fn root3(self) -> <Self as Root3>::Output {
         self.cbrt()
     }
 }

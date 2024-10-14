@@ -1,5 +1,3 @@
-use std::ops::*;
-
 //------------------------- HasValue -------------------------
 
 pub trait HasValue {
@@ -9,24 +7,12 @@ pub trait HasValue {
 
 //------------------------- Number -------------------------
 
-pub trait Number: Copy {
+pub trait Number: Copy + HasValue + PartialEq + PartialOrd {
     const ZERO: Self;
     const ONE: Self;
-}
+    const EPSILON: Self;
 
-//------------------------- Signed -------------------------
-
-pub trait Signed: Number {
     fn abs(self) -> Self;
-}
-
-//------------------------- Integer -------------------------
-
-pub trait Integer: Number + Ord {}
-
-//------------------------- Float -------------------------
-
-pub trait Float: Number + Signed {
     fn min(self, other: Self) -> Self;
     fn max(self, other: Self) -> Self;
     fn floor(self) -> Self;
@@ -34,6 +20,28 @@ pub trait Float: Number + Signed {
     fn ceil(self) -> Self;
     fn trunc(self) -> Self;
 }
+
+//------------------------- Signed -------------------------
+
+// pub trait Signed: Number {
+//     fn abs(self) -> Self;
+// }
+
+//------------------------- Integer -------------------------
+
+// pub trait Integer: Number + Ord {}
+
+//------------------------- Float -------------------------
+
+// pub trait Float: Number {
+//     const EPSILON: Self;
+//     fn min(self, other: Self) -> Self;
+//     fn max(self, other: Self) -> Self;
+//     fn floor(self) -> Self;
+//     fn round(self) -> Self;
+//     fn ceil(self) -> Self;
+//     fn trunc(self) -> Self;
+// }
 
 //------------------------- Pow -------------------------
 

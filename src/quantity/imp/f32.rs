@@ -1,16 +1,22 @@
 use crate::*;
 use std::ops::*;
 
+//------------------------- HasValue -------------------------
+
+impl HasValue for f32 {
+    type Output = Self;
+
+    fn value(self) -> Self::Output {
+        self
+    }
+}
+
 //------------------------- Number -------------------------
 
 impl Number for f32 {
     const ZERO: Self = 0.0;
     const ONE: Self = 1.0;
-}
 
-//------------------------- Signed -------------------------
-
-impl Signed for f32 {
     fn abs(self) -> Self {
         self.abs()
     }
@@ -19,6 +25,8 @@ impl Signed for f32 {
 //------------------------- Float -------------------------
 
 impl Float for f32 {
+    const EPSILON: Self = std::f32::EPSILON;
+
     fn min(self, other: Self) -> Self {
         self.min(other)
     }

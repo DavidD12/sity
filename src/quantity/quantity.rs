@@ -99,21 +99,28 @@ where
     }
 }
 
-// //------------------------- Value -------------------------
+//------------------------- Default -------------------------
 
-// impl<T, LE, ME, TE, IE, OE> QuantityValue<T> for Quantity<T, LE, ME, TE, IE, OE>
-// where
-//     T: Number,
-//     LE: Exponent,
-//     ME: Exponent,
-//     TE: Exponent,
-//     IE: Exponent,
-//     OE: Exponent,
-// {
-//     fn value(self) -> T {
-//         self.value
-//     }
-// }
+impl<T, LE, ME, TE, IE, OE> Default for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Number,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    fn default() -> Self {
+        Self {
+            value: T::ZERO,
+            le: PhantomData,
+            me: PhantomData,
+            te: PhantomData,
+            ie: PhantomData,
+            oe: PhantomData,
+        }
+    }
+}
 
 //------------------------- Display -------------------------
 
@@ -152,7 +159,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> HasValue for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Number,
+    T: Number,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -170,7 +177,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Number for Quantity<T, LE, ME, TE, IE, OE>
 where
-    T: Copy + Number,
+    T: Number,
     LE: Exponent,
     ME: Exponent,
     TE: Exponent,
@@ -194,101 +201,20 @@ where
         ie: PhantomData,
         oe: PhantomData,
     };
-}
 
-//------------------------- Signed -------------------------
+    const EPSILON: Self = Self {
+        value: T::EPSILON,
+        le: PhantomData,
+        me: PhantomData,
+        te: PhantomData,
+        ie: PhantomData,
+        oe: PhantomData,
+    };
 
-impl<T, LE, ME, TE, IE, OE> Signed for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Copy + Signed,
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
     fn abs(self) -> Self {
         Self::new(self.value.abs())
     }
-}
 
-//------------------------- Integer -------------------------
-
-impl<T, LE, ME, TE, IE, OE> PartialEq for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Number + PartialEq,
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-    fn eq(&self, other: &Self) -> bool {
-        self.value == other.value
-    }
-}
-
-impl<T, LE, ME, TE, IE, OE> Eq for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Number + Eq,
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-}
-
-impl<T, LE, ME, TE, IE, OE> PartialOrd for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Number + PartialOrd,
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.value.partial_cmp(&other.value)
-    }
-}
-
-impl<T, LE, ME, TE, IE, OE> Ord for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Number + Ord,
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.value.cmp(&other.value)
-    }
-}
-
-impl<T, LE, ME, TE, IE, OE> Integer for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Integer,
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
-}
-
-//------------------------- Float -------------------------
-
-impl<T, LE, ME, TE, IE, OE> Float for Quantity<T, LE, ME, TE, IE, OE>
-where
-    T: Float,
-    LE: Exponent,
-    ME: Exponent,
-    TE: Exponent,
-    IE: Exponent,
-    OE: Exponent,
-{
     fn min(self, other: Self) -> Self {
         Self::new(self.value.min(other.value))
     }
@@ -311,6 +237,36 @@ where
 
     fn trunc(self) -> Self {
         Self::new(self.value.trunc())
+    }
+}
+
+//------------------------- PartialEq/PartialOrd -------------------------
+
+impl<T, LE, ME, TE, IE, OE> PartialEq for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Number,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    fn eq(&self, other: &Self) -> bool {
+        self.value == other.value
+    }
+}
+
+impl<T, LE, ME, TE, IE, OE> PartialOrd for Quantity<T, LE, ME, TE, IE, OE>
+where
+    T: Number,
+    LE: Exponent,
+    ME: Exponent,
+    TE: Exponent,
+    IE: Exponent,
+    OE: Exponent,
+{
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        self.value.partial_cmp(&other.value)
     }
 }
 
@@ -524,8 +480,8 @@ where
     OE: Exponent + Pow2Exp,
 {
     type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
-    fn pow2(self) -> Self::Output {
-        Self::Output::new(self.value().pow2())
+    fn pow2(self) -> <Self as Pow2>::Output {
+        <Self as Pow2>::Output::new(self.value().pow2())
     }
 }
 
@@ -541,8 +497,8 @@ where
     OE: Exponent + Pow3Exp,
 {
     type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
-    fn pow3(self) -> Self::Output {
-        Self::Output::new(self.value().pow3())
+    fn pow3(self) -> <Self as Pow3>::Output {
+        <Self as Pow3>::Output::new(self.value().pow3())
     }
 }
 
@@ -558,12 +514,12 @@ where
     OE: Exponent + Root2Exp,
 {
     type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
-    fn root2(self) -> Self::Output {
-        Self::Output::new(self.value().root2())
+    fn root2(self) -> <Self as Root2>::Output {
+        <Self as Root2>::Output::new(self.value().root2())
     }
 }
 
-//------------------------- Pow3 -------------------------
+//------------------------- Root3 -------------------------
 
 impl<T, LE, ME, TE, IE, OE> Root3 for Quantity<T, LE, ME, TE, IE, OE>
 where
@@ -575,7 +531,7 @@ where
     OE: Exponent + Root3Exp,
 {
     type Output = Quantity<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
-    fn root3(self) -> Self::Output {
-        Self::Output::new(self.value().root3())
+    fn root3(self) -> <Self as Root3>::Output {
+        <Self as Root3>::Output::new(self.value().root3())
     }
 }
