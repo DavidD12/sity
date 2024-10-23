@@ -11,6 +11,14 @@ impl HasValue for f64 {
     }
 }
 
+//------------------------- ToBase -------------------------
+
+impl ToBase for f64 {
+    fn to_base<P1: Prefix, P2: Prefix>(&self) -> Self {
+        self * 10.0_f64.powi(P1::BASE - P2::BASE)
+    }
+}
+
 //------------------------- Number -------------------------
 
 impl Number for f64 {

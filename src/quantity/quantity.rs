@@ -122,6 +122,19 @@ where
     }
 }
 
+//------------------------- Convert -------------------------
+
+// pub trait Convert<P: Prefix, Output: Number> {
+//     fn convert<PO: Prefix>(&self) -> Output;
+// }
+
+// impl<T, LE, ME, TE, IE, OE> Convert< for Quantity<T, Exp1<P>, Exp0, Exp0, Exp0, Exp0>
+// where
+//     T: Number,
+//     P: Prefix,
+// {
+// }
+
 //------------------------- Display -------------------------
 
 impl<T, LE, ME, TE, IE, OE> Display for Quantity<T, LE, ME, TE, IE, OE>

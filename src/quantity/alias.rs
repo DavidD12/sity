@@ -3,6 +3,14 @@ use super::*;
 pub struct SI;
 
 impl SI {
+    //------------------------- Convert -------------------------
+
+    pub fn convert<T: Number + ToBase, P1: Prefix, P2: Prefix>(
+        value: Metre_<T, P1>,
+    ) -> Metre_<T, P2> {
+        Metre_::<T, P2>::new(value.value().to_base::<P1, P2>())
+    }
+
     //------------------------- Value -------------------------
 
     pub fn value<T: Number>(value: T) -> Value<T> {
@@ -70,6 +78,10 @@ pub type KiloMetre<T> = Metre_<T, Kilo>;
 pub type DeciMetre<T> = Metre_<T, Deci>;
 pub type CentiMetre<T> = Metre_<T, Centi>;
 pub type MilliMetre<T> = Metre_<T, Milli>;
+
+//------------------------- Velocity -------------------------
+
+pub type Velocity_<T, PL, PT> = Quantity<T, Exp1<PL>, Exp0, Exp_1<PT>, Exp0, Exp0>;
 
 //------------------------- Gram -------------------------
 

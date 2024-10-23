@@ -5,9 +5,26 @@ pub trait HasValue {
     fn value(self) -> Self::Output;
 }
 
+//------------------------- Base -------------------------
+
+use std::process::Output;
+
+use crate::prefix::Prefix;
+
+pub trait ToBase {
+    fn to_base<P1: Prefix, P2: Prefix>(&self) -> Self;
+}
+
 //------------------------- Number -------------------------
 
-pub trait Number: Copy + HasValue + PartialEq + PartialOrd {
+pub trait Number:
+    Copy
+    + HasValue
+    + PartialEq
+    + PartialOrd
+    + std::ops::Add<Self, Output = Self>
+    + std::ops::Sub<Self, Output = Self>
+{
     const ZERO: Self;
     const ONE: Self;
     const EPSILON: Self;
