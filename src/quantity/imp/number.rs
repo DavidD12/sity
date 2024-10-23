@@ -24,6 +24,7 @@ pub trait Number:
     + PartialOrd
     + std::ops::Add<Self, Output = Self>
     + std::ops::Sub<Self, Output = Self>
+    + std::fmt::Display
 {
     const ZERO: Self;
     const ONE: Self;
