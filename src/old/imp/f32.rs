@@ -3,7 +3,7 @@ use std::ops::*;
 
 //------------------------- HasValue -------------------------
 
-impl HasValue for f64 {
+impl HasValue for f32 {
     type Output = Self;
 
     fn value(self) -> Self::Output {
@@ -11,24 +11,21 @@ impl HasValue for f64 {
     }
 }
 
-//------------------------- ToBase -------------------------
-
-impl ToBase for f64 {
-    fn to_base<P1: Prefix, P2: Prefix>(&self) -> Self {
-        self * 10.0_f64.powi(P1::BASE - P2::BASE)
-    }
-}
-
 //------------------------- Number -------------------------
 
-impl Number for f64 {
+impl Number for f32 {
     const ZERO: Self = 0.0;
     const ONE: Self = 1.0;
-    const EPSILON: Self = std::f64::EPSILON;
 
     fn abs(self) -> Self {
         self.abs()
     }
+}
+
+//------------------------- Float -------------------------
+
+impl Float for f32 {
+    const EPSILON: Self = std::f32::EPSILON;
 
     fn min(self, other: Self) -> Self {
         self.min(other)
@@ -37,6 +34,7 @@ impl Number for f64 {
     fn max(self, other: Self) -> Self {
         self.max(other)
     }
+
     fn floor(self) -> Self {
         self.floor()
     }
@@ -56,41 +54,41 @@ impl Number for f64 {
 
 //------------------------- Pow/Root -------------------------
 
-impl Pow2 for f64 {
+impl Pow2 for f32 {
     type Output = Self;
 
-    fn pow2(self) -> <Self as Pow2>::Output {
+    fn pow2(self) -> Self::Output {
         self.powi(2)
     }
 }
 
-impl Pow3 for f64 {
+impl Pow3 for f32 {
     type Output = Self;
 
-    fn pow3(self) -> <Self as Pow3>::Output {
+    fn pow3(self) -> Self::Output {
         self.powi(2)
     }
 }
 
-impl Root2 for f64 {
+impl Root2 for f32 {
     type Output = Self;
 
-    fn root2(self) -> <Self as Root2>::Output {
+    fn root2(self) -> Self::Output {
         self.sqrt()
     }
 }
 
-impl Root3 for f64 {
+impl Root3 for f32 {
     type Output = Self;
 
-    fn root3(self) -> <Self as Root3>::Output {
+    fn root3(self) -> Self::Output {
         self.cbrt()
     }
 }
 
 //------------------------- Mul -------------------------
 
-impl<LE, ME, TE, IE, OE> Mul<Quantity<f64, LE, ME, TE, IE, OE>> for f64
+impl<LE, ME, TE, IE, OE> Mul<Quantity<f32, LE, ME, TE, IE, OE>> for f32
 where
     LE: Exponent,
     ME: Exponent,
@@ -98,8 +96,8 @@ where
     IE: Exponent,
     OE: Exponent,
 {
-    type Output = Quantity<f64, LE, ME, TE, IE, OE>;
-    fn mul(self, other: Quantity<f64, LE, ME, TE, IE, OE>) -> Self::Output {
+    type Output = Quantity<f32, LE, ME, TE, IE, OE>;
+    fn mul(self, other: Quantity<f32, LE, ME, TE, IE, OE>) -> Self::Output {
         Self::Output::new(self * other.value())
     }
 }

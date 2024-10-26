@@ -7,12 +7,10 @@ pub trait HasValue {
 
 //------------------------- Base -------------------------
 
-use std::process::Output;
-
-use crate::prefix::Prefix;
+use crate::{Exponent, Prefix};
 
 pub trait ToBase {
-    fn to_base<P1: Prefix, P2: Prefix>(&self) -> Self;
+    fn to_base<E: Exponent, P: Prefix>(&self) -> Self;
 }
 
 //------------------------- Number -------------------------
@@ -23,7 +21,9 @@ pub trait Number:
     + PartialEq
     + PartialOrd
     + std::ops::Add<Self, Output = Self>
+    + std::ops::AddAssign<Self>
     + std::ops::Sub<Self, Output = Self>
+    + std::ops::SubAssign<Self>
     + std::fmt::Display
 {
     const ZERO: Self;

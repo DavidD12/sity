@@ -5,7 +5,7 @@ use sealed::sealed;
 
 #[sealed]
 pub trait Exponent: Copy {
-    const VALUE: i32;
+    const EXPONENT: i32;
     const BASE: i32;
     const BASE_SYMBOL: &'static str;
 }
@@ -14,7 +14,7 @@ pub trait Exponent: Copy {
 pub struct Exp0;
 #[sealed]
 impl Exponent for Exp0 {
-    const VALUE: i32 = 0;
+    const EXPONENT: i32 = 0;
     const BASE: i32 = 0;
     const BASE_SYMBOL: &'static str = "";
 }
@@ -25,7 +25,7 @@ pub struct Exp1<P: Prefix> {
 }
 #[sealed]
 impl<P: Prefix> Exponent for Exp1<P> {
-    const VALUE: i32 = 1;
+    const EXPONENT: i32 = 1;
     const BASE: i32 = P::BASE;
     const BASE_SYMBOL: &'static str = P::SYMBOL;
 }
@@ -36,7 +36,7 @@ pub struct Exp2<P: Prefix> {
 }
 #[sealed]
 impl<P: Prefix> Exponent for Exp2<P> {
-    const VALUE: i32 = 2;
+    const EXPONENT: i32 = 2;
     const BASE: i32 = P::BASE;
     const BASE_SYMBOL: &'static str = P::SYMBOL;
 }
@@ -47,7 +47,7 @@ pub struct Exp3<P: Prefix> {
 }
 #[sealed]
 impl<P: Prefix> Exponent for Exp3<P> {
-    const VALUE: i32 = 3;
+    const EXPONENT: i32 = 3;
     const BASE: i32 = P::BASE;
     const BASE_SYMBOL: &'static str = P::SYMBOL;
 }
@@ -59,7 +59,7 @@ pub struct Exp_1<P: Prefix> {
 }
 #[sealed]
 impl<P: Prefix> Exponent for Exp_1<P> {
-    const VALUE: i32 = -1;
+    const EXPONENT: i32 = -1;
     const BASE: i32 = P::BASE;
     const BASE_SYMBOL: &'static str = P::SYMBOL;
 }
@@ -71,7 +71,7 @@ pub struct Exp_2<P: Prefix> {
 }
 #[sealed]
 impl<P: Prefix> Exponent for Exp_2<P> {
-    const VALUE: i32 = -2;
+    const EXPONENT: i32 = -2;
     const BASE: i32 = P::BASE;
     const BASE_SYMBOL: &'static str = P::SYMBOL;
 }
@@ -83,7 +83,7 @@ pub struct Exp_3<P: Prefix> {
 }
 #[sealed]
 impl<P: Prefix> Exponent for Exp_3<P> {
-    const VALUE: i32 = -3;
+    const EXPONENT: i32 = -3;
     const BASE: i32 = P::BASE;
     const BASE_SYMBOL: &'static str = P::SYMBOL;
 }

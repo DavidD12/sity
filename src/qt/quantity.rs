@@ -46,7 +46,7 @@ where
         let mut s = String::new();
         // Length (m)
         if Length::EXPONENT != 0 {
-            s += &pretty::<Length>("m");
+            s += &pretty::<Length>();
             sep = true;
         }
         // Mass (Kg)
@@ -54,7 +54,7 @@ where
             if sep {
                 s += ".";
             }
-            s += &pretty::<Mass>("g");
+            s += &pretty::<Mass>();
             sep = true;
         }
         // Time (s)
@@ -62,7 +62,7 @@ where
             if sep {
                 s += ".";
             }
-            s += &pretty::<Time>("s");
+            s += &pretty::<Time>();
             sep = true;
         }
         // Electric (A)
@@ -70,7 +70,7 @@ where
             if sep {
                 s += ".";
             }
-            s += &pretty::<Current>("A");
+            s += &pretty::<Current>();
             sep = true;
         }
         // Temperature (K)
@@ -78,7 +78,7 @@ where
             if sep {
                 s += ".";
             }
-            s += &pretty::<Temperature>("K");
+            s += &pretty::<Temperature>();
             // sep = true;
         }
         s

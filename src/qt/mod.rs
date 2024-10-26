@@ -1,13 +1,16 @@
 pub mod prefix;
 pub use prefix::*;
 
+pub mod exponent;
+pub use exponent::*;
+
+pub mod exponent_div;
+pub mod exponent_mul;
+pub mod exponent_pow;
+pub mod exponent_root;
+
 pub mod scale_factor;
 pub use scale_factor::*;
-
-pub mod scale_div;
-pub mod scale_mul;
-pub mod scale_pow;
-pub mod scale_root;
 
 pub mod quantity;
 pub use quantity::*;
