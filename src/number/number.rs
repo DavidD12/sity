@@ -7,11 +7,20 @@ pub trait HasValue {
 
 //------------------------- Base -------------------------
 
-// use crate::Prefix;
+use std::process::Output;
 
-// pub trait ToBase {
-//     fn to_base<E: Exponent, P: Prefix>(&self) -> Self;
-// }
+use crate::Prefix;
+
+pub trait ToBase {
+    fn to_base<P1: Prefix, P2: Prefix, const N: i32>(&self) -> Self;
+}
+
+//------------------------- Convert -------------------------
+
+pub trait Convert {
+    type Output;
+    fn convert(&self) -> Output;
+}
 
 //------------------------- Number -------------------------
 

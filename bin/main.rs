@@ -1,4 +1,3 @@
-use sity::quantity::*;
 pub use sity::*;
 use std::mem;
 
@@ -12,10 +11,21 @@ fn main() {
     // let y: CentiMetre<_> = SI::convert(x);
 
     // println!("{} = {}", x, y);
+    let m = metre(1.0);
+    let g = kilo_gram(2.0);
+    let s = second(3.0);
+    let a = ampere(4.0);
 
-    let a = SI::cm(3.0);
-    let b = SI::cm(4.0);
-    let c = SI::s(2.0);
+    let x = m.pow2() * g / s.pow3() / a;
+    println!("{}", x);
+    let y = volt(1.2);
+    println!("{}", y);
+
+    println!("{}", hertz(2.0));
+    println!("{}", watt(3.0));
+
+    let b = centi_metre(4.0);
+    let c = second(2.0);
     println!("a = {}", a);
     println!("b = {}", b);
     println!("c = {}", c.pow2().root2());

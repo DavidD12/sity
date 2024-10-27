@@ -12,11 +12,11 @@ impl HasValue for f64 {
 
 //------------------------- ToBase -------------------------
 
-// impl ToBase for f64 {
-//     fn to_base<E: Exponent, P: Prefix>(&self) -> Self {
-//         self * 10.0_f64.powi(E::BASE - P::BASE).powi(E::EXPONENT)
-//     }
-// }
+impl ToBase for f64 {
+    fn to_base<P1: Prefix, P2: Prefix, const N: i32>(&self) -> Self {
+        self * 10.0_f64.powi(P1::PREFIX - P2::PREFIX).powi(N)
+    }
+}
 
 //------------------------- Number -------------------------
 

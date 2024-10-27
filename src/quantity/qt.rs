@@ -21,6 +21,24 @@ where
     temperature: PhantomData<Temperature>,
 }
 
+impl<T, M, G, S, A, K> Quantity for Qt<T, M, G, S, A, K>
+where
+    T: Number,
+    // T: Number,
+    M: ScaleFactor,
+    G: ScaleFactor,
+    S: ScaleFactor,
+    A: ScaleFactor,
+    K: ScaleFactor,
+{
+    type Value = T;
+    type Length = M;
+    type Mass = G;
+    type Time = S;
+    type Current = A;
+    type Temperature = K;
+}
+
 impl<T, Length, Mass, Time, Current, Temperature> Qt<T, Length, Mass, Time, Current, Temperature>
 where
     T: Number,
@@ -39,49 +57,6 @@ where
             current: PhantomData,
             temperature: PhantomData,
         }
-    }
-
-    pub fn unit(&self) -> String {
-        let mut sep = false;
-        let mut s = String::new();
-        // Length (m)
-        if Length::EXPONENT != 0 {
-            s += &pretty::<Length>();
-            sep = true;
-        }
-        // Mass (Kg)
-        if Mass::EXPONENT != 0 {
-            if sep {
-                s += ".";
-            }
-            s += &pretty::<Mass>();
-            sep = true;
-        }
-        // Time (s)
-        if Time::EXPONENT != 0 {
-            if sep {
-                s += ".";
-            }
-            s += &pretty::<Time>();
-            sep = true;
-        }
-        // Electric (A)
-        if Current::EXPONENT != 0 {
-            if sep {
-                s += ".";
-            }
-            s += &pretty::<Current>();
-            sep = true;
-        }
-        // Temperature (K)
-        if Temperature::EXPONENT != 0 {
-            if sep {
-                s += ".";
-            }
-            s += &pretty::<Temperature>();
-            // sep = true;
-        }
-        s
     }
 }
 
@@ -144,6 +119,50 @@ where
     }
 }
 
+//------------------------- Convert -------------------------
+
+impl<
+        T,
+        MP,
+        const ME: i32,
+        GP,
+        const GE: i32,
+        SP,
+        const SE: i32,
+        AP,
+        const AE: i32,
+        KP,
+        const KE: i32,
+    > Qt<T, Scale<MP, ME>, Scale<GP, GE>, Scale<SP, SE>, Scale<AP, AE>, Scale<KP, KE>>
+where
+    T: Number + ToBase,
+    MP: Prefix,
+    GP: Prefix,
+    SP: Prefix,
+    AP: Prefix,
+    KP: Prefix,
+{
+    pub fn convert<MPO, GPO, SPO, APO, KPO>(
+        &self,
+    ) -> Qt<T, Scale<MPO, ME>, Scale<GPO, GE>, Scale<SPO, SE>, Scale<APO, AE>, Scale<KPO, KE>>
+    where
+        MPO: Prefix,
+        GPO: Prefix,
+        SPO: Prefix,
+        APO: Prefix,
+        KPO: Prefix,
+    {
+        let v = self.value;
+        let v = v.to_base::<MP, MPO, ME>();
+        let v = v.to_base::<GP, GPO, GE>();
+        let v = v.to_base::<SP, SPO, SE>();
+        let v = v.to_base::<AP, APO, AE>();
+        let v = v.to_base::<KP, KPO, KE>();
+        Qt::<T, Scale<MPO, ME>, Scale<GPO, GE>, Scale<SPO, SE>, Scale<APO, AE>, Scale<KPO, KE>>::new(
+            v,
+        )
+    }
+}
 //------------------------- HasValue -------------------------
 
 impl<T, Length, Mass, Time, Current, Temperature> HasValue
