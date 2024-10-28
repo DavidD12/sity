@@ -24,12 +24,3 @@ pub mod generator;
 pub use generator::*;
 
 //----------------------------------------------------------------------------------------------------
-
-pub fn test() {
-    // let x = Qt::<f64, Scale<One, Exp<1>>, Scale<Centi, Exp<1>>>::new(10.0);
-    // let y = Qt::<f64, Scale<One, Exp<1>>, Scale<Centi, Exp<1>>>::new(20.0);
-    // let z = x + y;
-    // let z = x * y;
-    // let z = x * 3.0 / y;
-    // let z = x.pow2().root2();
-}

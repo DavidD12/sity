@@ -1,4 +1,5 @@
 use super::*;
+use crate::angle::*;
 use crate::number::*;
 
 use std::marker::PhantomData;
@@ -247,6 +248,36 @@ where
 
     fn trunc(self) -> Self {
         Self::new(self.value.trunc())
+    }
+}
+
+//------------------------- AngleFactory -------------------------
+
+impl<T, Length, Mass, Time, Current, Temperature> AngleFactory
+    for Qt<T, Length, Mass, Time, Current, Temperature>
+where
+    T: Number + AngleFactory,
+    T: HasValue<Output = T>,
+    Length: ScaleFactor,      // Length (m)
+    Mass: ScaleFactor,        // Mass (kg)
+    Time: ScaleFactor,        // Time (s)
+    Current: ScaleFactor,     // Electric current (A)
+    Temperature: ScaleFactor, // Thermodynamic temperature (K)
+{
+    fn asin(&self) -> Radian<<Self as HasValue>::Output> {
+        self.value.asin()
+    }
+
+    fn acos(&self) -> Radian<<Self as HasValue>::Output> {
+        self.value.acos()
+    }
+
+    fn atan(&self) -> Radian<<Self as HasValue>::Output> {
+        self.value.atan()
+    }
+
+    fn atan2(&self, y: Self) -> Radian<<Self as HasValue>::Output> {
+        self.value.atan2(y.value)
     }
 }
 
