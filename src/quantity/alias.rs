@@ -5,7 +5,7 @@ use crate::*;
 pub type Value<T> =
     Qt<T, Scale<One, 0>, Scale<One, 0>, Scale<One, 0>, Scale<One, 0>, Scale<One, 0>>;
 
-pub fn value<T: Number>(value: T) -> Value<T> {
+pub fn value<T: Scalar>(value: T) -> Value<T> {
     Value::new(value)
 }
 
@@ -25,29 +25,29 @@ pub type DeciMetre<T> = Metre_<T, Deci>;
 pub type CentiMetre<T> = Metre_<T, Centi>;
 pub type MilliMetre<T> = Metre_<T, Milli>;
 
-pub fn _m<T: Number, P: Prefix>(value: T) -> Metre_<T, P> {
+pub fn _m<T: Scalar, P: Prefix>(value: T) -> Metre_<T, P> {
     Metre_::new(value)
 }
 
-pub fn kilo_metre<T: Number>(value: T) -> KiloMetre<T> {
+pub fn kilo_metre<T: Scalar>(value: T) -> KiloMetre<T> {
     Metre_::new(value)
 }
-pub fn hecto_metre<T: Number>(value: T) -> HectoMetre<T> {
+pub fn hecto_metre<T: Scalar>(value: T) -> HectoMetre<T> {
     Metre_::new(value)
 }
-pub fn deca_metre<T: Number>(value: T) -> DecaMetre<T> {
+pub fn deca_metre<T: Scalar>(value: T) -> DecaMetre<T> {
     Metre_::new(value)
 }
-pub fn metre<T: Number>(value: T) -> Metre<T> {
+pub fn metre<T: Scalar>(value: T) -> Metre<T> {
     Metre_::new(value)
 }
-pub fn deci_metre<T: Number>(value: T) -> DeciMetre<T> {
+pub fn deci_metre<T: Scalar>(value: T) -> DeciMetre<T> {
     Metre_::new(value)
 }
-pub fn centi_metre<T: Number>(value: T) -> CentiMetre<T> {
+pub fn centi_metre<T: Scalar>(value: T) -> CentiMetre<T> {
     Metre_::new(value)
 }
-pub fn milli_metre<T: Number>(value: T) -> MilliMetre<T> {
+pub fn milli_metre<T: Scalar>(value: T) -> MilliMetre<T> {
     Metre_::new(value)
 }
 
@@ -59,13 +59,13 @@ pub type Gram_<T, P> =
 pub type Gram<T> = Gram_<T, One>;
 pub type KiloGram<T> = Gram_<T, Kilo>;
 
-pub fn _g<T: Number, P: Prefix>(value: T) -> Gram_<T, P> {
+pub fn _g<T: Scalar, P: Prefix>(value: T) -> Gram_<T, P> {
     Gram_::new(value)
 }
-pub fn kilo_gram<T: Number>(value: T) -> KiloGram<T> {
+pub fn kilo_gram<T: Scalar>(value: T) -> KiloGram<T> {
     Gram_::new(value)
 }
-pub fn gram<T: Number>(value: T) -> Gram<T> {
+pub fn gram<T: Scalar>(value: T) -> Gram<T> {
     Gram_::new(value)
 }
 
@@ -80,21 +80,21 @@ pub type MilliSecond<T> = Second_<T, Milli>;
 pub type MicroSecond<T> = Second_<T, Micro>;
 pub type NanoSecond<T> = Second_<T, Nano>;
 
-pub fn _s<T: Number, P: Prefix>(value: T) -> Second_<T, P> {
+pub fn _s<T: Scalar, P: Prefix>(value: T) -> Second_<T, P> {
     Second_::new(value)
 }
-pub fn second<T: Number>(value: T) -> Second<T> {
+pub fn second<T: Scalar>(value: T) -> Second<T> {
     Second::new(value)
 }
-pub fn milli_second<T: Number>(value: T) -> MilliSecond<T> {
+pub fn milli_second<T: Scalar>(value: T) -> MilliSecond<T> {
     MilliSecond::new(value)
 }
 
-pub fn micro_second<T: Number>(value: T) -> MicroSecond<T> {
+pub fn micro_second<T: Scalar>(value: T) -> MicroSecond<T> {
     MicroSecond::new(value)
 }
 
-pub fn nano_second<T: Number>(value: T) -> NanoSecond<T> {
+pub fn nano_second<T: Scalar>(value: T) -> NanoSecond<T> {
     NanoSecond::new(value)
 }
 
@@ -103,7 +103,7 @@ pub fn nano_second<T: Number>(value: T) -> NanoSecond<T> {
 pub type Ampere<T> =
     Qt<T, Scale<One, 0>, Scale<One, 0>, Scale<One, 0>, Scale<One, 1>, Scale<One, 0>>;
 
-pub fn ampere<T: Number>(value: T) -> Ampere<T> {
+pub fn ampere<T: Scalar>(value: T) -> Ampere<T> {
     Ampere::new(value)
 }
 
@@ -112,7 +112,7 @@ pub fn ampere<T: Number>(value: T) -> Ampere<T> {
 pub type Kelvin<T> =
     Qt<T, Scale<One, 0>, Scale<One, 0>, Scale<One, 0>, Scale<One, 0>, Scale<One, 1>>;
 
-pub fn kelvin<T: Number>(value: T) -> Kelvin<T> {
+pub fn kelvin<T: Scalar>(value: T) -> Kelvin<T> {
     Kelvin::new(value)
 }
 
@@ -123,7 +123,7 @@ pub fn kelvin<T: Number>(value: T) -> Kelvin<T> {
 pub type Newton<T> =
     Qt<T, Scale<One, 1>, Scale<Kilo, 1>, Scale<One, -2>, Scale<One, 0>, Scale<One, 0>>;
 
-pub fn newton<T: Number>(value: T) -> Newton<T> {
+pub fn newton<T: Scalar>(value: T) -> Newton<T> {
     Newton::new(value)
 }
 
@@ -132,7 +132,7 @@ pub fn newton<T: Number>(value: T) -> Newton<T> {
 pub type Pascal<T> =
     Qt<T, Scale<One, -1>, Scale<Kilo, 1>, Scale<One, -2>, Scale<One, 0>, Scale<One, 0>>;
 
-pub fn pascal<T: Number>(value: T) -> Pascal<T> {
+pub fn pascal<T: Scalar>(value: T) -> Pascal<T> {
     Pascal::new(value)
 }
 
@@ -141,7 +141,7 @@ pub fn pascal<T: Number>(value: T) -> Pascal<T> {
 pub type Volt<T> =
     Qt<T, Scale<One, 2>, Scale<Kilo, 1>, Scale<One, -3>, Scale<One, -1>, Scale<One, 0>>;
 
-pub fn volt<T: Number>(value: T) -> Volt<T> {
+pub fn volt<T: Scalar>(value: T) -> Volt<T> {
     Volt::new(value)
 }
 
@@ -150,7 +150,7 @@ pub fn volt<T: Number>(value: T) -> Volt<T> {
 pub type Joule<T> =
     Qt<T, Scale<One, 2>, Scale<Kilo, 1>, Scale<One, -2>, Scale<One, 0>, Scale<One, 0>>;
 
-pub fn joule<T: Number>(value: T) -> Joule<T> {
+pub fn joule<T: Scalar>(value: T) -> Joule<T> {
     Joule::new(value)
 }
 //------------------------- Watt = m2⋅kg⋅s-3  -------------------------
@@ -158,7 +158,7 @@ pub fn joule<T: Number>(value: T) -> Joule<T> {
 pub type Watt<T> =
     Qt<T, Scale<One, 2>, Scale<Kilo, 1>, Scale<One, -3>, Scale<One, 0>, Scale<One, 0>>;
 
-pub fn watt<T: Number>(value: T) -> Watt<T> {
+pub fn watt<T: Scalar>(value: T) -> Watt<T> {
     Watt::new(value)
 }
 
@@ -167,7 +167,7 @@ pub fn watt<T: Number>(value: T) -> Watt<T> {
 pub type Hertz<T> =
     Qt<T, Scale<One, 0>, Scale<One, 0>, Scale<One, -1>, Scale<One, 0>, Scale<One, 0>>;
 
-pub fn hertz<T: Number>(value: T) -> Hertz<T> {
+pub fn hertz<T: Scalar>(value: T) -> Hertz<T> {
     Hertz::new(value)
 }
 
@@ -176,7 +176,7 @@ pub fn hertz<T: Number>(value: T) -> Hertz<T> {
 pub type Coulomb<T> =
     Qt<T, Scale<One, 0>, Scale<One, 0>, Scale<One, 1>, Scale<One, 1>, Scale<One, 0>>;
 
-pub fn coulomb<T: Number>(value: T) -> Coulomb<T> {
+pub fn coulomb<T: Scalar>(value: T) -> Coulomb<T> {
     Coulomb::new(value)
 }
 
@@ -185,7 +185,7 @@ pub fn coulomb<T: Number>(value: T) -> Coulomb<T> {
 pub type Ohm<T> =
     Qt<T, Scale<One, 2>, Scale<Kilo, 1>, Scale<One, -3>, Scale<One, -2>, Scale<One, 0>>;
 
-pub fn ohm<T: Number>(value: T) -> Ohm<T> {
+pub fn ohm<T: Scalar>(value: T) -> Ohm<T> {
     Ohm::new(value)
 }
 

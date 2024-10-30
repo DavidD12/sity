@@ -22,9 +22,9 @@ pub trait AngleOps {
     fn to_radians(&self) -> Self;
 }
 
-pub trait Angle<T>: Number
+pub trait Angle<T>: Scalar
 where
-    T: Number + AngleOps,
+    T: Scalar + AngleOps,
 {
     fn sin(&self) -> T;
     fn cos(&self) -> T;

@@ -1,13 +1,13 @@
 use crate::*;
 
 #[derive(Clone, Copy, Default, Debug, PartialEq, PartialOrd)]
-pub struct Radian<T: Number> {
+pub struct Radian<T: Scalar> {
     value: T,
 }
 
 //------------------------- -------------------------
 
-impl<T: Number> Radian<T> {
+impl<T: Scalar> Radian<T> {
     pub fn new(value: T) -> Self {
         Self { value }
     }
@@ -15,7 +15,7 @@ impl<T: Number> Radian<T> {
 
 //------------------------- From/Into -------------------------
 
-impl<T: Number> From<T> for Radian<T> {
+impl<T: Scalar> From<T> for Radian<T> {
     fn from(value: T) -> Self {
         Self { value }
     }
@@ -23,7 +23,7 @@ impl<T: Number> From<T> for Radian<T> {
 
 //------------------------- Number -------------------------
 
-impl<T: Number> HasValue for Radian<T> {
+impl<T: Scalar> HasValue for Radian<T> {
     type Output = T;
 
     fn value(self) -> Self::Output {
@@ -31,9 +31,13 @@ impl<T: Number> HasValue for Radian<T> {
     }
 }
 
+//------------------------- Scalar -------------------------
+
+impl<T: Scalar> Scalar for Radian<T> {}
+
 //------------------------- Number -------------------------
 
-impl<T: Number> Number for Radian<T> {
+impl<T: Scalar> Number for Radian<T> {
     const ZERO: Self = Self { value: T::ZERO };
     const ONE: Self = Self { value: T::ONE };
     const EPSILON: Self = Self { value: T::EPSILON };
@@ -83,7 +87,7 @@ impl<T: Number> Number for Radian<T> {
 
 //------------------------- Display -------------------------
 
-impl<T: Number> std::fmt::Display for Radian<T> {
+impl<T: Scalar> std::fmt::Display for Radian<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}rad", self.value)
     }
@@ -91,8 +95,7 @@ impl<T: Number> std::fmt::Display for Radian<T> {
 
 impl<T> Angle<T> for Radian<T>
 where
-    T: Number + AngleOps,
-    <T as HasValue>::Output: AngleOps,
+    T: Scalar + AngleOps,
 {
     fn sin(&self) -> T {
         self.value.sin()
@@ -106,28 +109,6 @@ where
         self.value.tan()
     }
 
-    // fn asin(x: T) -> <T as HasValue>::Output {
-    //     Self {
-    //         value: x.value().asin(),
-    //     }
-    // }
-
-    // fn acos(value: T) -> <T as HasValue>::Output {
-    //     Self {
-    //         value: value.acos(),
-    //     }
-    // }
-
-    // fn atan(value: T) -> <T as HasValue>::Output {
-    //     Self {
-    //         value: value.atan(),
-    //     }
-    // }
-
-    // fn atan2(x: T, y: T) -> Self {
-    //     Self { value: x.atan2(y) }
-    // }
-
     fn to_radians(&self) -> Self {
         *self
     }
@@ -137,9 +118,19 @@ where
     }
 }
 
+//------------------------- Neg -------------------------
+
+impl<T: Scalar + std::ops::Neg<Output = T>> std::ops::Neg for Radian<T> {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Self { value: -self.value }
+    }
+}
+
 //------------------------- Add -------------------------
 
-impl<T: Number> std::ops::Add<Self> for Radian<T> {
+impl<T: Scalar> std::ops::Add<Self> for Radian<T> {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
@@ -149,7 +140,7 @@ impl<T: Number> std::ops::Add<Self> for Radian<T> {
     }
 }
 
-impl<T: Number> std::ops::AddAssign<Self> for Radian<T> {
+impl<T: Scalar> std::ops::AddAssign<Self> for Radian<T> {
     fn add_assign(&mut self, rhs: Self) {
         self.value += rhs.value
     }
@@ -157,7 +148,7 @@ impl<T: Number> std::ops::AddAssign<Self> for Radian<T> {
 
 //------------------------- Sub -------------------------
 
-impl<T: Number> std::ops::Sub<Self> for Radian<T> {
+impl<T: Scalar> std::ops::Sub<Self> for Radian<T> {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self::Output {
@@ -167,8 +158,44 @@ impl<T: Number> std::ops::Sub<Self> for Radian<T> {
     }
 }
 
-impl<T: Number> std::ops::SubAssign<Self> for Radian<T> {
+impl<T: Scalar> std::ops::SubAssign<Self> for Radian<T> {
     fn sub_assign(&mut self, rhs: Self) {
         self.value -= rhs.value
+    }
+}
+
+//------------------------- Mul -------------------------
+
+impl<T: Scalar> std::ops::Mul<Self> for Radian<T> {
+    type Output = Self;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        Self {
+            value: self.value * rhs.value,
+        }
+    }
+}
+
+impl<T: Scalar> std::ops::MulAssign<Self> for Radian<T> {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.value *= rhs.value
+    }
+}
+
+//------------------------- Div -------------------------
+
+impl<T: Scalar> std::ops::Div<Self> for Radian<T> {
+    type Output = Self;
+
+    fn div(self, rhs: Self) -> Self::Output {
+        Self {
+            value: self.value / rhs.value,
+        }
+    }
+}
+
+impl<T: Scalar> std::ops::DivAssign<Self> for Radian<T> {
+    fn div_assign(&mut self, rhs: Self) {
+        self.value /= rhs.value
     }
 }

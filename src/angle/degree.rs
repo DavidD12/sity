@@ -1,13 +1,13 @@
 use crate::*;
 
 #[derive(Clone, Copy, Default, Debug, PartialEq, PartialOrd)]
-pub struct Degree<T: Number> {
+pub struct Degree<T: Scalar> {
     value: T,
 }
 
 //------------------------- -------------------------
 
-impl<T: Number> Degree<T> {
+impl<T: Scalar> Degree<T> {
     pub fn new(value: T) -> Self {
         Self { value }
     }
@@ -15,7 +15,7 @@ impl<T: Number> Degree<T> {
 
 //------------------------- From/Into -------------------------
 
-impl<T: Number> From<T> for Degree<T> {
+impl<T: Scalar> From<T> for Degree<T> {
     fn from(value: T) -> Self {
         Self { value }
     }
@@ -23,7 +23,7 @@ impl<T: Number> From<T> for Degree<T> {
 
 //------------------------- Number -------------------------
 
-impl<T: Number> HasValue for Degree<T> {
+impl<T: Scalar> HasValue for Degree<T> {
     type Output = T;
 
     fn value(self) -> Self::Output {
@@ -33,7 +33,7 @@ impl<T: Number> HasValue for Degree<T> {
 
 //------------------------- Number -------------------------
 
-impl<T: Number> Number for Degree<T> {
+impl<T: Scalar> Number for Degree<T> {
     const ZERO: Self = Self { value: T::ZERO };
     const ONE: Self = Self { value: T::ONE };
     const EPSILON: Self = Self { value: T::EPSILON };
@@ -81,9 +81,13 @@ impl<T: Number> Number for Degree<T> {
     }
 }
 
+//------------------------- Scalar -------------------------
+
+impl<T: Scalar> Scalar for Degree<T> {}
+
 //------------------------- Display -------------------------
 
-impl<T: Number> std::fmt::Display for Degree<T> {
+impl<T: Scalar> std::fmt::Display for Degree<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}rad", self.value)
     }
@@ -91,7 +95,7 @@ impl<T: Number> std::fmt::Display for Degree<T> {
 
 impl<T> Angle<T> for Degree<T>
 where
-    T: Number + AngleOps,
+    T: Scalar + AngleOps,
 {
     fn sin(&self) -> T {
         self.value.sin()
@@ -105,28 +109,6 @@ where
         self.value.tan()
     }
 
-    // fn asin(value: T) -> Self {
-    //     Self {
-    //         value: value.asin(),
-    //     }
-    // }
-
-    // fn acos(value: T) -> Self {
-    //     Self {
-    //         value: value.acos(),
-    //     }
-    // }
-
-    // fn atan(value: T) -> Self {
-    //     Self {
-    //         value: value.atan(),
-    //     }
-    // }
-
-    // fn atan2(x: T, y: T) -> Self {
-    //     Self { value: x.atan2(y) }
-    // }
-
     fn to_degrees(&self) -> Degree<T> {
         *self
     }
@@ -136,9 +118,19 @@ where
     }
 }
 
+//------------------------- Neg -------------------------
+
+impl<T: Scalar + std::ops::Neg<Output = T>> std::ops::Neg for Degree<T> {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Self { value: -self.value }
+    }
+}
+
 //------------------------- Add -------------------------
 
-impl<T: Number> std::ops::Add<Self> for Degree<T> {
+impl<T: Scalar> std::ops::Add<Self> for Degree<T> {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
@@ -148,7 +140,7 @@ impl<T: Number> std::ops::Add<Self> for Degree<T> {
     }
 }
 
-impl<T: Number> std::ops::AddAssign<Self> for Degree<T> {
+impl<T: Scalar> std::ops::AddAssign<Self> for Degree<T> {
     fn add_assign(&mut self, rhs: Self) {
         self.value += rhs.value
     }
@@ -156,7 +148,7 @@ impl<T: Number> std::ops::AddAssign<Self> for Degree<T> {
 
 //------------------------- Sub -------------------------
 
-impl<T: Number> std::ops::Sub<Self> for Degree<T> {
+impl<T: Scalar> std::ops::Sub<Self> for Degree<T> {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self::Output {
@@ -166,8 +158,44 @@ impl<T: Number> std::ops::Sub<Self> for Degree<T> {
     }
 }
 
-impl<T: Number> std::ops::SubAssign<Self> for Degree<T> {
+impl<T: Scalar> std::ops::SubAssign<Self> for Degree<T> {
     fn sub_assign(&mut self, rhs: Self) {
         self.value -= rhs.value
+    }
+}
+
+//------------------------- Mul -------------------------
+
+impl<T: Scalar> std::ops::Mul<Self> for Degree<T> {
+    type Output = Self;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        Self {
+            value: self.value * rhs.value,
+        }
+    }
+}
+
+impl<T: Scalar> std::ops::MulAssign<Self> for Degree<T> {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.value *= rhs.value
+    }
+}
+
+//------------------------- Div -------------------------
+
+impl<T: Scalar> std::ops::Div<Self> for Degree<T> {
+    type Output = Self;
+
+    fn div(self, rhs: Self) -> Self::Output {
+        Self {
+            value: self.value / rhs.value,
+        }
+    }
+}
+
+impl<T: Scalar> std::ops::DivAssign<Self> for Degree<T> {
+    fn div_assign(&mut self, rhs: Self) {
+        self.value /= rhs.value
     }
 }

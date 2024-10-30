@@ -1,7 +1,16 @@
 //------------------------- HasValue -------------------------
 
+pub trait Scalar:
+    Number
+    + std::ops::Mul<Self, Output = Self>
+    + std::ops::Div<Self, Output = Self>
+    + std::ops::MulAssign<Self>
+    + std::ops::DivAssign<Self>
+{
+}
+
 pub trait HasValue {
-    type Output: Number;
+    type Output: Scalar;
     fn value(self) -> Self::Output;
 }
 
@@ -29,6 +38,7 @@ pub trait Number:
     + HasValue
     + PartialEq
     + PartialOrd
+    // + std::ops::Neg<Output = Self>
     + std::ops::Add<Self, Output = Self>
     + std::ops::AddAssign<Self>
     + std::ops::Sub<Self, Output = Self>

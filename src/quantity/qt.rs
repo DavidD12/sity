@@ -7,7 +7,7 @@ use std::marker::PhantomData;
 #[derive(Copy, Clone, Debug)]
 pub struct Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -24,7 +24,7 @@ where
 
 impl<T, M, G, S, A, K> Quantity for Qt<T, M, G, S, A, K>
 where
-    T: Number,
+    T: Scalar,
     // T: Number,
     M: ScaleFactor,
     G: ScaleFactor,
@@ -42,7 +42,7 @@ where
 
 impl<T, Length, Mass, Time, Current, Temperature> Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -66,7 +66,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> Default
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -90,7 +90,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::fmt::Display
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -108,7 +108,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> From<T>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -136,7 +136,7 @@ impl<
         const KE: i32,
     > Qt<T, Scale<MP, ME>, Scale<GP, GE>, Scale<SP, SE>, Scale<AP, AE>, Scale<KP, KE>>
 where
-    T: Number + ToBase,
+    T: Scalar + ToBase,
     MP: Prefix,
     GP: Prefix,
     SP: Prefix,
@@ -169,7 +169,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> HasValue
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -188,7 +188,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> Number
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -256,7 +256,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> AngleFactory
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number + AngleFactory,
+    T: Scalar + AngleFactory,
     T: HasValue<Output = T>,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
@@ -286,7 +286,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> PartialEq
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -301,7 +301,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> PartialOrd
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -318,7 +318,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::ops::Add<Self>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -335,7 +335,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::ops::AddAssign<Self>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -352,7 +352,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::ops::Sub<Self>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -369,7 +369,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::ops::SubAssign<Self>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -386,7 +386,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::ops::Mul<T>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number + std::ops::Mul<T, Output = T>,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -403,7 +403,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::ops::MulAssign<T>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number + std::ops::MulAssign<T>,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -418,7 +418,7 @@ where
 impl<T, LE, ME, TE, IE, OE, LE1, ME1, TE1, IE1, OE1> std::ops::Mul<Qt<T, LE1, ME1, TE1, IE1, OE1>>
     for Qt<T, LE, ME, TE, IE, OE>
 where
-    T: Number + std::ops::Mul<T, Output = T>,
+    T: Scalar,
     LE: ScaleFactor + MulScale<LE1>,
     ME: ScaleFactor + MulScale<ME1>,
     TE: ScaleFactor + MulScale<TE1>,
@@ -442,7 +442,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::ops::Div<T>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number + std::ops::Div<T, Output = T>,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -459,7 +459,7 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> std::ops::DivAssign<T>
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Number + std::ops::DivAssign<T>,
+    T: Scalar,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
@@ -474,7 +474,7 @@ where
 impl<T, LE, ME, TE, IE, OE, LE1, ME1, TE1, IE1, OE1> std::ops::Div<Qt<T, LE1, ME1, TE1, IE1, OE1>>
     for Qt<T, LE, ME, TE, IE, OE>
 where
-    T: Number + std::ops::Div<T, Output = T>,
+    T: Scalar,
     LE: ScaleFactor + DivScale<LE1>,
     ME: ScaleFactor + DivScale<ME1>,
     TE: ScaleFactor + DivScale<TE1>,
@@ -497,7 +497,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> std::ops::Neg for Qt<T, LE, ME, TE, IE, OE>
 where
-    T: Number + std::ops::Neg<Output = T>,
+    T: Scalar + std::ops::Neg<Output = T>,
     LE: ScaleFactor,
     ME: ScaleFactor,
     TE: ScaleFactor,
@@ -515,7 +515,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Pow2 for Qt<T, LE, ME, TE, IE, OE>
 where
-    T: Number + Pow2<Output = T>,
+    T: Scalar + Pow2<Output = T>,
     LE: ScaleFactor + PowScale<2>,
     ME: ScaleFactor + PowScale<2>,
     TE: ScaleFactor + PowScale<2>,
@@ -532,7 +532,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Pow3 for Qt<T, LE, ME, TE, IE, OE>
 where
-    T: Number + Pow3<Output = T>,
+    T: Scalar + Pow3<Output = T>,
     LE: ScaleFactor + PowScale<3>,
     ME: ScaleFactor + PowScale<3>,
     TE: ScaleFactor + PowScale<3>,
@@ -549,7 +549,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Root2 for Qt<T, LE, ME, TE, IE, OE>
 where
-    T: Number + Root2<Output = T>,
+    T: Scalar + Root2<Output = T>,
     LE: ScaleFactor + RootScale<2>,
     ME: ScaleFactor + RootScale<2>,
     TE: ScaleFactor + RootScale<2>,
@@ -566,7 +566,7 @@ where
 
 impl<T, LE, ME, TE, IE, OE> Root3 for Qt<T, LE, ME, TE, IE, OE>
 where
-    T: Number + Root3<Output = T>,
+    T: Scalar + Root3<Output = T>,
     LE: ScaleFactor + RootScale<3>,
     ME: ScaleFactor + RootScale<3>,
     TE: ScaleFactor + RootScale<3>,

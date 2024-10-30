@@ -47,6 +47,10 @@ impl Number for isize {
     }
 }
 
+//------------------------- Scalar -------------------------
+
+impl Scalar for isize {}
+
 //------------------------- Pow -------------------------
 
 impl Pow2 for isize {
