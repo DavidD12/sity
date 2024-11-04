@@ -9,6 +9,8 @@ mod imp;
 use crate::*;
 
 pub trait AngleOps {
+    const PI: Self;
+
     fn sin(&self) -> Self;
     fn cos(&self) -> Self;
     fn tan(&self) -> Self;

@@ -58,6 +58,12 @@ pub trait Number:
     fn trunc(self) -> Self;
 }
 
+//------------------------- From Value -------------------------
+
+pub trait FromValue<T: Scalar> {
+    fn from_value(value: T) -> Self;
+}
+
 //------------------------- Pow -------------------------
 
 pub trait Pow2: Number {
@@ -70,6 +76,11 @@ pub trait Pow3: Number {
     fn pow3(&self) -> <Self as Pow3>::Output;
 }
 
+pub trait Pow4: Number {
+    type Output;
+    fn pow4(&self) -> <Self as Pow4>::Output;
+}
+
 //------------------------- Root -------------------------
 
 pub trait Root2: Number {
@@ -80,4 +91,9 @@ pub trait Root2: Number {
 pub trait Root3: Number {
     type Output;
     fn root3(&self) -> <Self as Root3>::Output;
+}
+
+pub trait Root4: Number {
+    type Output;
+    fn root4(&self) -> <Self as Root4>::Output;
 }

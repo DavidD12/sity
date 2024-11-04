@@ -1,6 +1,8 @@
 use crate::{AngleFactory, AngleOps, Radian};
 
 impl AngleOps for f32 {
+    const PI: Self = std::f32::consts::PI;
+
     fn sin(&self) -> Self {
         (*self).sin()
     }

@@ -7,7 +7,9 @@ pub struct Radian<T: Scalar> {
 
 //------------------------- -------------------------
 
-impl<T: Scalar> Radian<T> {
+impl<T: Scalar + AngleOps> Radian<T> {
+    pub const PI: Self = Self { value: T::PI };
+
     pub fn new(value: T) -> Self {
         Self { value }
     }

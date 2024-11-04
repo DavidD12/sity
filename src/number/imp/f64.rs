@@ -53,9 +53,23 @@ impl Number for f64 {
     }
 }
 
+//------------------------- From Value -------------------------
+
+impl FromValue<usize> for f64 {
+    fn from_value(value: usize) -> Self {
+        value as f64
+    }
+}
+
+impl FromValue<isize> for f64 {
+    fn from_value(value: isize) -> Self {
+        value as f64
+    }
+}
+
 //------------------------- Scalar -------------------------
 
-impl Scalar for f32 {}
+impl Scalar for f64 {}
 
 //------------------------- Pow/Root -------------------------
 
@@ -71,7 +85,15 @@ impl Pow3 for f64 {
     type Output = Self;
 
     fn pow3(&self) -> <Self as Pow3>::Output {
-        self.powi(2)
+        self.powi(3)
+    }
+}
+
+impl Pow4 for f64 {
+    type Output = Self;
+
+    fn pow4(&self) -> <Self as Pow3>::Output {
+        self.powi(4)
     }
 }
 
@@ -88,6 +110,14 @@ impl Root3 for f64 {
 
     fn root3(&self) -> <Self as Root3>::Output {
         self.cbrt()
+    }
+}
+
+impl Root4 for f64 {
+    type Output = Self;
+
+    fn root4(&self) -> <Self as Root3>::Output {
+        self.powf(1.0 / 4.0)
     }
 }
 

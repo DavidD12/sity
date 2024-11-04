@@ -120,6 +120,19 @@ where
     }
 }
 
+//------------------------- From Value -------------------------
+
+impl<T, U> FromValue<U> for Value<T>
+where
+    T: Scalar + FromValue<U>,
+    U: Scalar,
+{
+    fn from_value(value: U) -> Self {
+        let v = T::from_value(value);
+        Self::new(v)
+    }
+}
+
 //------------------------- Convert -------------------------
 
 impl<
@@ -544,6 +557,22 @@ where
         <Self as Pow3>::Output::new(self.value().pow3())
     }
 }
+//------------------------- Pow4 -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Pow4 for Qt<T, LE, ME, TE, IE, OE>
+where
+    T: Scalar + Pow4<Output = T>,
+    LE: ScaleFactor + PowScale<4>,
+    ME: ScaleFactor + PowScale<4>,
+    TE: ScaleFactor + PowScale<4>,
+    IE: ScaleFactor + PowScale<4>,
+    OE: ScaleFactor + PowScale<4>,
+{
+    type Output = Qt<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
+    fn pow4(&self) -> <Self as Pow4>::Output {
+        <Self as Pow4>::Output::new(self.value().pow4())
+    }
+}
 
 //------------------------- Root2 -------------------------
 
@@ -576,5 +605,22 @@ where
     type Output = Qt<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
     fn root3(&self) -> <Self as Root3>::Output {
         <Self as Root3>::Output::new(self.value().root3())
+    }
+}
+
+//------------------------- Root4 -------------------------
+
+impl<T, LE, ME, TE, IE, OE> Root4 for Qt<T, LE, ME, TE, IE, OE>
+where
+    T: Scalar + Root4<Output = T>,
+    LE: ScaleFactor + RootScale<4>,
+    ME: ScaleFactor + RootScale<4>,
+    TE: ScaleFactor + RootScale<4>,
+    IE: ScaleFactor + RootScale<4>,
+    OE: ScaleFactor + RootScale<4>,
+{
+    type Output = Qt<T, LE::Output, ME::Output, TE::Output, IE::Output, OE::Output>;
+    fn root4(&self) -> <Self as Root4>::Output {
+        <Self as Root4>::Output::new(self.value().root4())
     }
 }

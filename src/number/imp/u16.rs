@@ -64,10 +64,17 @@ impl Pow3 for u16 {
     type Output = Self;
 
     fn pow3(&self) -> <Self as Pow3>::Output {
-        self.pow(3)
+        self.pow(4)
     }
 }
 
+impl Pow4 for u16 {
+    type Output = Self;
+
+    fn pow4(&self) -> <Self as Pow3>::Output {
+        self.pow(4)
+    }
+}
 //------------------------- Mul -------------------------
 
 impl<LE, ME, TE, IE, OE> Mul<Qt<u16, LE, ME, TE, IE, OE>> for u16
