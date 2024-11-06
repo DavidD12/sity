@@ -1,7 +1,7 @@
 use sealed::sealed;
 
 #[sealed]
-pub trait Prefix: Copy {
+pub trait Prefix: Copy + std::fmt::Debug {
     const SYMBOL: &'static str;
     const PREFIX: i32;
 }

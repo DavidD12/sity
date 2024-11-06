@@ -81,10 +81,6 @@ impl<T: Scalar> Number for Degree<T> {
     }
 }
 
-//------------------------- Scalar -------------------------
-
-impl<T: Scalar> Scalar for Degree<T> {}
-
 //------------------------- Display -------------------------
 
 impl<T: Scalar> std::fmt::Display for Degree<T> {

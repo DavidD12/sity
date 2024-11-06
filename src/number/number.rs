@@ -6,6 +6,7 @@ pub trait Scalar:
     + std::ops::Div<Self, Output = Self>
     + std::ops::MulAssign<Self>
     + std::ops::DivAssign<Self>
+    + HasValue<Output = Self>
 {
 }
 
@@ -34,7 +35,7 @@ pub trait Convert {
 //------------------------- Number -------------------------
 
 pub trait Number:
-    Copy
+    Copy + std::fmt::Debug + Default
     + HasValue
     + PartialEq
     + PartialOrd
@@ -56,6 +57,15 @@ pub trait Number:
     fn round(self) -> Self;
     fn ceil(self) -> Self;
     fn trunc(self) -> Self;
+
+    fn same(self, other: Self) -> bool {
+        if self >= other {
+            self - other <= Self::EPSILON
+        }
+        else {
+            other - self <= Self::EPSILON
+        }
+    }
 }
 
 //------------------------- From Value -------------------------

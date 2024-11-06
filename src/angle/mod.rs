@@ -24,7 +24,7 @@ pub trait AngleOps {
     fn to_radians(&self) -> Self;
 }
 
-pub trait Angle<T>: Scalar
+pub trait Angle<T>: Number
 where
     T: Scalar + AngleOps,
 {
@@ -36,7 +36,10 @@ where
     fn to_radians(&self) -> Radian<T>;
 }
 
-pub trait AngleFactory: Number {
+pub trait AngleFactory: Number
+where
+    <Self as HasValue>::Output: AngleOps,
+{
     fn asin(&self) -> Radian<<Self as HasValue>::Output>;
     fn acos(&self) -> Radian<<Self as HasValue>::Output>;
     fn atan(&self) -> Radian<<Self as HasValue>::Output>;

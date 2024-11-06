@@ -98,8 +98,7 @@ where
     Temperature: ScaleFactor, // Thermodynamic temperature (K)
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.value.fmt(f)?;
-        write!(f, "{}", self.unit())
+        write!(f, "{}{}", self.value, self.unit())
     }
 }
 
@@ -269,28 +268,27 @@ where
 impl<T, Length, Mass, Time, Current, Temperature> AngleFactory
     for Qt<T, Length, Mass, Time, Current, Temperature>
 where
-    T: Scalar + AngleFactory,
-    T: HasValue<Output = T>,
+    T: Scalar + AngleFactory + AngleOps,
     Length: ScaleFactor,      // Length (m)
     Mass: ScaleFactor,        // Mass (kg)
     Time: ScaleFactor,        // Time (s)
     Current: ScaleFactor,     // Electric current (A)
     Temperature: ScaleFactor, // Thermodynamic temperature (K)
 {
-    fn asin(&self) -> Radian<<Self as HasValue>::Output> {
-        self.value.asin()
+    fn asin(&self) -> Radian<T> {
+        AngleFactory::asin(&self.value)
     }
 
-    fn acos(&self) -> Radian<<Self as HasValue>::Output> {
-        self.value.acos()
+    fn acos(&self) -> Radian<T> {
+        AngleFactory::acos(&self.value)
     }
 
-    fn atan(&self) -> Radian<<Self as HasValue>::Output> {
-        self.value.atan()
+    fn atan(&self) -> Radian<T> {
+        AngleFactory::atan(&self.value)
     }
 
-    fn atan2(&self, y: Self) -> Radian<<Self as HasValue>::Output> {
-        self.value.atan2(y.value)
+    fn atan2(&self, y: Self) -> Radian<T> {
+        AngleFactory::atan2(&self.value, y.value)
     }
 }
 

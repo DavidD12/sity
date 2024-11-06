@@ -4,7 +4,7 @@ use sealed::sealed;
 use std::marker::PhantomData;
 
 #[sealed]
-pub trait ScaleFactor: Copy {
+pub trait ScaleFactor: Copy + std::fmt::Debug {
     const PREFIX: i32;
     const SYMBOL: &'static str;
     const EXPONENT: i32;
