@@ -85,7 +85,7 @@ impl<T: Scalar> Number for Degree<T> {
 
 impl<T: Scalar> std::fmt::Display for Degree<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}rad", self.value)
+        write!(f, "{}°", self.value)
     }
 }
 
