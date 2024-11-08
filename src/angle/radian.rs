@@ -164,6 +164,30 @@ impl<T: Scalar + AngleOps> std::ops::SubAssign<Self> for Radian<T> {
 
 //------------------------- Mul -------------------------
 
+impl<T> std::ops::Mul<T> for Radian<T>
+where
+    T: Scalar + AngleOps,
+    T: std::ops::Mul<T, Output = T>,
+{
+    type Output = Self;
+
+    fn mul(self, rhs: T) -> Self::Output {
+        Self {
+            value: self.value * rhs,
+        }
+    }
+}
+
+impl<T> std::ops::MulAssign<T> for Radian<T>
+where
+    T: Scalar + AngleOps,
+    T: std::ops::Mul<T, Output = T>,
+{
+    fn mul_assign(&mut self, rhs: T) {
+        self.value *= rhs;
+    }
+}
+
 impl<T: Scalar + AngleOps> std::ops::Mul<Self> for Radian<T> {
     type Output = Self;
 
@@ -181,6 +205,30 @@ impl<T: Scalar + AngleOps> std::ops::MulAssign<Self> for Radian<T> {
 }
 
 //------------------------- Div -------------------------
+
+impl<T> std::ops::Div<T> for Radian<T>
+where
+    T: Scalar + AngleOps,
+    T: std::ops::Div<T, Output = T>,
+{
+    type Output = Self;
+
+    fn div(self, rhs: T) -> Self::Output {
+        Self {
+            value: self.value / rhs,
+        }
+    }
+}
+
+impl<T> std::ops::DivAssign<T> for Radian<T>
+where
+    T: Scalar + AngleOps,
+    T: std::ops::Div<T, Output = T>,
+{
+    fn div_assign(&mut self, rhs: T) {
+        self.value /= rhs;
+    }
+}
 
 impl<T: Scalar + AngleOps> std::ops::Div<Self> for Radian<T> {
     type Output = Self;
